@@ -1,0 +1,24 @@
+{
+  "name": "clanbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --env-file=.env src/index.js ",
+    "start": "node --env-file=.env src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0"
+  },
+  "dependencies": {
+    "discord.js": "^14.17.3",
+    "mongoose": "^8.9.6",
+    "wokcommands": "^2.1.9"
+  }
+}
