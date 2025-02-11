@@ -8,6 +8,7 @@ const Clans = require("../models/Clans");
 const Matches = require("../models/Matches");
 const { handleInteractionError } = require("../utils/interaction");
 const { updateClanTracker } = require("../utils/msic");
+const { sendMessageInClanLogsChannel } = require("../utils/notify");
 
 module.exports = {
   description: "Manage clan matches",
@@ -56,7 +57,7 @@ module.exports = {
 
   async callback({ interaction }) {
     try {
-      const { guild, user, options, channel, member } = interaction;
+      const { guild, user, options, channel, member, client } = interaction;
 
       const subcommand = options.getSubcommand();
       await interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -116,6 +117,11 @@ module.exports = {
           matchChannelId: matchChannel.id,
         });
 
+        await sendMessageInClanLogsChannel(
+          client,
+          `Match started between **${userClan.clanName}** and **${opponentClan.clanName}** in ${matchChannel}`
+        );
+
         await interaction.editReply({
           content: `Match channel created: ${matchChannel}`,
         });
@@ -143,7 +149,7 @@ module.exports = {
           { new: true }
         );
 
-        await Clans.findByIdAndUpdate(losingClanName, {
+        const loosingClan = await Clans.findByIdAndUpdate(losingClanName, {
           $inc: { matchesLost: 1 },
         });
 
@@ -156,6 +162,11 @@ module.exports = {
         setTimeout(() => {
           channel.delete().catch(console.error);
         }, 60000);
+
+        await sendMessageInClanLogsChannel(
+          client,
+          `**${winnerClan.clanName}** won the match against **${loosingClan.clanName}** 🎊`
+        );
 
         await interaction.editReply({
           content: `Match concluded! ${winnerClan.clanName} wins!`,
