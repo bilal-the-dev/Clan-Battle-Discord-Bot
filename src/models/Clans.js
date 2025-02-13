@@ -14,7 +14,7 @@ const schema = new Schema(
     clanVcId: String,
     clanDescription: { type: String, default: "None" },
     clanAssociatedRoleId: String,
-    clanAssociatedChannelId: { type: String, unique: true },
+    clanAssociatedChannelId: String,
     clanStatus: {
       type: String,
       enums: ["active", "pending"],
