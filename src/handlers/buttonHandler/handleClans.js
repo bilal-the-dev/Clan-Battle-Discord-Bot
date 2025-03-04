@@ -283,7 +283,7 @@ exports.handleClanJoin = async (interaction) => {
   const options = clans.map((c) =>
     new StringSelectMenuOptionBuilder()
       .setLabel(c.clanName.slice(0, 100))
-      .setDescription(c.clanDescription.slice(0, 100))
+      .setDescription(c.clanDescription.slice(0, 100) || 'No desc')
       .setValue(c._id.toString())
   );
 
