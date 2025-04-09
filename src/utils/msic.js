@@ -17,7 +17,7 @@ exports.updateClanTracker = async (client, guildId) => {
 
     const message = await channel.messages.fetch(clanTrackerMessageId);
 
-    const clans = await Clans.find({ guildId }).sort({ points: "descending" });
+    const clans = await Clans.find({ guildId }).sort({ points: "descending" }).limit(10)
 
     const embed = new EmbedBuilder()
       .setTitle("🏆 Clan List")
